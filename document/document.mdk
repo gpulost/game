@@ -9,7 +9,7 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
             每个游戏会包含多个plugin，每个plugin会有一些功能点，这些功能点就是商品(commodity)
 
 ##commodity
-            游戏中的商品(eg.各种道具),游戏向CPServer购买,消耗3中的currency
+            游戏中的商品(eg.各种道具),游戏向CPServer购买,消耗2.3中的currency
 
 ##currency
             游戏中的货币(eg.金币、钻石),GGLY-SDK向GGLY-Server购买,消耗RMB或者GG平台的积分
@@ -34,7 +34,7 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
               e. ip(待确定)
 
 ##sub_id
-		         GG账号在对应游戏中的id
+		        GG账号在对应游戏中的id
 
 ##GGLY-Server
 		        联运平台的server
@@ -54,13 +54,31 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 ##游戏上架，游戏商品录入
 
 ###自有联运游戏上架流程
+![3.1.1 CPServer]
 
+[3.1.1 CPServer]: images/3.1.1-CPServer.svg "3.1.1 CPServer" { width:auto; max-width:90% }
+
+注：
+
+   1. GGLY-Server需要提供录入game信息, 商品(commodity_id, price_type, price)的功能
+   2. CPServer需要提供录入game，商品详情信息的功能
 
 
 ###第三方联运游戏上架流程
+![3.1.2 3rd-CP]
+
+[3.1.2 3rd-CP]: images/3.1.2-3rd-CP.svg "3.1.2 3rd-CP" { width:auto; max-width:90% }
+
+注：
+
+   1. GGLY-Server需要提供录入game信息, 商品(commodity_id, price_type, price)的功能
 
 
-##注册
+##注册(不区分CPServer和3rd-CPServer)
+![3.2注册]
+
+[3.2注册]: images/3.2-.svg "3.2注册" { width:auto; max-width:90% }
+
 GGLY-SDK注册功能支持三种方式：
 
 1. 手机号
@@ -68,34 +86,42 @@ GGLY-SDK注册功能支持三种方式：
 3. 第三方weixin 
 
 
+##登录(不区分CPServer和3rd-CPServer)
+![3.3登录 (2)]
 
-##登录
-GGLY-SDK登录功能支持四种方式：
+[3.3登录 (2)]: images/3.3-(2).svg "3.3登录 (2)" { width:auto; max-width:90% }
+
+
+GGLY-SDK登录功能支持四种方式:
 
 1. 手机号
 2. 第三方QQ
 3. 第三方weixin 
 4. 老账号密码
 
-game_token说明：
-  1. game_token是
+说明:
+
+  1. 步骤1的GGLY-Server处理需要考虑 <subid, game_id, device, ip>
+  2. 步骤3,4的参数都要带上： <subid, game_id, device, ip>
 
 
-  
-####3.2 登录
+##商品购买（区分自有和3rd的联运游戏）
+1. GGLY-Server并不区分commodity和currency
+2. 对于GGLY-Server只需要知道(subid, game_id, commodity_id/currency_id, price_type, price)
+3. 并且完成购买后向CPServer或3rd-CPServer通知(subid, game_id, commodity_id/currency_id)购买成功
 
-![3.2登录]
+###自有联运游戏的commodity购买
+![3.4.1自有产品购买]
 
-[3.2登录]: images/3.2-.svg "3.2登录" { width:auto; max-width:90% }
+[3.4.1自有产品购买]: images/3.4.1-.svg "3.4.1自有产品购买" { width:auto; max-width:90% }
+
+
+###第三方联运游戏的commodity和currency购买
+![3.4.2 3rd购买]
+
+[3.4.2 3rd购买]: images/3.4.2-3rd-.svg "3.4.2 3rd购买" { width:auto; max-width:90% }
 
 
 
-####3.3 商品购买
-![3.3商品购买]
-		
-
-[3.3商品购买]: images/3.3-.png "3.3商品购买" { width:auto; max-width:90% }
-
-[3.2登录]: images/3.2-.png "3.2登录" { width:auto; max-width:90% }
 
 
