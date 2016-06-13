@@ -1,18 +1,35 @@
 # 场景:
-GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin(每个plugin会包含一些功能)，而这些功能的使用需要用户拥有不同的level,所以需要CPServer，同时重打包游戏集成GG SDK以联运的形式发行
+1. GG需要和一些游戏做联运，所以需要有一个联运平台和联运sdk
+2. 同时我们有很多重打包的游戏，对于这些游戏，我们会加入一些plugin(每个plugin会包含一些功能)，而这些功能的使用需要用户拥有不同的level,
+   因此我们也作为一个CP(Content Provider)来接入GG联运平台发行这些游戏
 
 
 # 解释
 
+###CP
+            Content Provider, 游戏开发商
+
+##GGLY-Server
+		        游戏联运平台, 联运平台和游戏开发商合作发行游戏，同一个游戏开发商可以和多家联运平台合作发行游戏，联运平台参提供账号系统，充值功能等功能，参入游戏收入分成
+
+##CPServer 和 3rd-CPServer
+		        1.游戏的发行方，为游戏提供数据支持，游戏内的各种逻辑，道具都是通过CPServer控制的
+            2.在联运过程中，我们自己重打包的游戏也是以联运的方式发行，用以区分第三方游戏的CPServer，我们自己的叫做CPServer第三方的称为3rd-CPServer
+
+##GGLY-SDK
+           1. 联运的SDK，进行联运的游戏需要集成该SDK
+           2. 该SDK和GGLY-Server交互
+           3. 该SDK提供登录注册、购买道具等功能
+
+##currency
+            游戏中的货币(eg.10个金币、20个钻石),GGLY-SDK向GGLY-Server购买,消耗RMB或者GG平台的积分
+
+##commodity
+            游戏中的商品(eg.裤子，魔法),游戏向CPServer购买,消耗currency
+
 ##plugin 
 
             每个游戏会包含多个plugin，每个plugin会有一些功能点，这些功能点就是商品(commodity)
-
-##commodity
-            游戏中的商品(eg.各种道具),游戏向CPServer购买,消耗2.3中的currency
-
-##currency
-            游戏中的货币(eg.金币、钻石),GGLY-SDK向GGLY-Server购买,消耗RMB或者GG平台的积分
 
 ##game
             和GGLY-Server进行联运的游戏，game中集成了GGLY-SDK
@@ -29,29 +46,19 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
           3. game_token的验证需要考虑:
               a. 有效期
               b. game_id
-              c. subid,
-              d. device_info
-              e. ip(待确定)
+              c. sub_user_id,
+              d. ip
+              e. device_info(optional)
 
-##sub_id
+##sub_user_id
 		        GG账号在对应游戏中的id
 
 ##secert_key
             1.secert_key在GGLY-Server平台获取
-            2.GGLY-Server向CPServer或3rd-CPServer通知商品购买时使用该参数生成签名，用于校验通知数据的真实性
+            2.GGLY-Server向CPServer或3rd-CPServer通知商品购买时使用secert_key和其他业务数据作为参数hash生成签名，用于CPServer校验通知数据的真实性
             3.签名生成算法参考 GG平台联运接入文档 V1.0.0
 
-##GGLY-Server
-		        联运平台
 
-##CPServer
-		        自有联运游戏的发行方
-
-##3rd-CPServer
-		        第三方联运游戏的发行方
-
-##GGLY-SDK
-            联运的SDK，进行联运的游戏需要集成该SDK
 
 
 # 功能
@@ -63,11 +70,22 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 
 [3.1.1 CPServer (1)]: images/3.1.1-CPServer-(1).svg "3.1.1 CPServer (1)" { width:auto; max-width:90% }
 
+eg:
+
+  一款游戏有以下commodity数据，自有游戏的commodity只通过GG积分或RMB
+
+![QQ图片20160613185107]
+  
+
+[QQ图片20160613185107]: images/QQ-20160613185107.png "QQ图片20160613185107" { width:auto; max-width:90% }
+
+那么commodity数据需要录入到GGLY-Server的数据只需要有(game_id, commodity_id, price_type, price)
 
 注：
 
    1. GGLY-Server需要提供录入game信息, 商品(commodity_id, price_type, price)的功能
    2. CPServer需要提供录入game，商品详情信息的功能
+   3. 自有的game可以支持每个游戏secert_key和game_token校验地址相同或者每个不同，这个看具体业务需求
 
 
 ###第三方联运游戏上架流程
