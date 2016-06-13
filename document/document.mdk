@@ -3,23 +3,35 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 
 
 # 解释
-1.   plugin: 
-            每个游戏会包含多个plugin，每个plugin会有一些功能点，这些功能点就是商品
+1.  plugin 
+            每个游戏会包含多个plugin，每个plugin会有一些功能点，这些功能点就是商品(commodity)
 
-2.    商品
-			重打包游戏所包含的plugin中的功能点
+2.   currency
+            游戏中的货币(eg.金币、钻石),GGLY-SDK向GGLYServer购买,消耗RMB或者GG平台的积分
 
-3.   game_id
-			游戏的id，8位16进制的字符串
+3.   commodity
+            游戏中的商品(eg.各种道具),game向CPServer购买,消耗2中的currency
 
-4.   sub_id
-			游戏的子账号id
-			
-2.   GGServer:
-			联运平台的server
-			
-3.    CPServer:
-		 我们最为CP的server
+4.   game_id
+		        对于自有game
+                  game_id为，8位16进制的字符串,game_id已有，直接录入到CP系统中
+            对于3rd-CP game
+                  game_id为，9位16进制的字符串,以及其他形式的能够区分开自有游戏和联运游戏的方式，3rd-CP需要向GGLY-Server申请game_id
+
+5.   sub_id
+		        游戏用户的子账号id
+
+
+6.   GGLY-Server
+		        联运平台的server
+
+7.   CPServer
+		        游戏的发行方
+8.   GGLY-SDK
+            联运的SDK
+
+
+
 
 
 # 功能
@@ -32,7 +44,7 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 
 		步骤：
 		1.运营人员在联运平台申请game_id
-		2.在CP平台录入game信息和商品信息(获得商品id)
+		2.在CP平台录入game信息和商品信息
 		3.CP平台录入完成后把商品的id，price再录入到联运平台
 		4.发布
 
@@ -45,8 +57,11 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 
 
 
-####3.3 商品购买
-![3.3商品购买]
+####3.3 curreny 和commodity购买
+![3.3购买]
+
+[3.3购买]: images/3.3-.svg "3.3购买" { width:auto; max-width:90% }
+
 		
 
 [3.3商品购买]: images/3.3-.png "3.3商品购买" { width:auto; max-width:90% }
