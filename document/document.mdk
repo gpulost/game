@@ -3,48 +3,85 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 
 
 # 解释
-1.   plugin: 
+
+##plugin 
+
             每个游戏会包含多个plugin，每个plugin会有一些功能点，这些功能点就是商品(commodity)
 
-2.   commodity
+##commodity
             游戏中的商品(eg.各种道具),游戏向CPServer购买,消耗3中的currency
 
-3.   currency
+##currency
             游戏中的货币(eg.金币、钻石),GGLY-SDK向GGLY-Server购买,消耗RMB或者GG平台的积分
 
-4.   game_id
-		        对于自有game
+##game
+            和GGLY-Server进行联运的游戏，game中集成了GGLY-SDK
+
+##game_id
+	         对于自有game
                   game_id为，8位16进制的字符串,game_id已有，直接录入到CP系统中
             对于3rd-CP game
                   game_id为，9位16进制的字符串,以及其他形式的能够区分开自有游戏和联运游戏的方式，3rd-CP需要向GGLY-Server申请game_id
-5.   sub_id
-		        游戏用户的子账号id
 
-6.   GGLY-Server
+##game_token
+          1. GGLY-SDK向GGLY-Server登录成功后获取的game_token,由GGLY-Server生成，用于Game获取到当前游戏用户的subid
+          2. game_token有效期为5分钟，过期无效，需要重新申请
+          3. game_token的验证需要考虑:
+              a. 有效期
+              b. game_id
+              c. subid,
+              d. device_info
+              e. ip(待确定)
+
+##sub_id
+		         GG账号在对应游戏中的id
+
+##GGLY-Server
 		        联运平台的server
 
-7.   CPServer
-		        游戏的发行方
+##CPServer
+		        自有联运游戏的发行方
 
-8.   GGLY-SDK
-            联运的SDK
+##3rd-CPServer
+		        第三方联运游戏的发行方
+
+##GGLY-SDK
+            联运的SDK，进行联运的游戏需要集成该SDK
 
 
 # 功能
 
-####3.1	提供游戏上架，商品录入
-![3.1游戏上架商品录入]
+##游戏上架，游戏商品录入
 
-[3.1游戏上架商品录入]: images/3.1-.png "3.1游戏上架商品录入" { width:auto; max-width:90% }
+###自有联运游戏上架流程
 
 
-		步骤：
-		1.运营人员在联运平台申请game_id
-		2.在CP平台录入game信息和商品信息(获得商品id)
-		3.CP平台录入完成后把商品的id，price再录入到联运平台
-		4.发布
 
-    
+###第三方联运游戏上架流程
+
+
+##注册
+GGLY-SDK注册功能支持三种方式：
+
+1. 手机号
+2. 第三方QQ
+3. 第三方weixin 
+
+
+
+##登录
+GGLY-SDK登录功能支持四种方式：
+
+1. 手机号
+2. 第三方QQ
+3. 第三方weixin 
+4. 老账号密码
+
+game_token说明：
+  1. game_token是
+
+
+  
 ####3.2 登录
 
 ![3.2登录]
