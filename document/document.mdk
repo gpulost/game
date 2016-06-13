@@ -36,8 +36,13 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 ##sub_id
 		        GG账号在对应游戏中的id
 
+##secert_key
+            1.secert_key在GGLY-Server平台获取
+            2.GGLY-Server向CPServer或3rd-CPServer通知商品购买时使用该参数生成签名，用于校验通知数据的真实性
+            3.签名生成算法参考 GG平台联运接入文档 V1.0.0
+
 ##GGLY-Server
-		        联运平台的server
+		        联运平台
 
 ##CPServer
 		        自有联运游戏的发行方
@@ -54,9 +59,10 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 ##游戏上架，游戏商品录入
 
 ###自有联运游戏上架流程
-![3.1.1 CPServer]
+![3.1.1 CPServer (1)]
 
-[3.1.1 CPServer]: images/3.1.1-CPServer.svg "3.1.1 CPServer" { width:auto; max-width:90% }
+[3.1.1 CPServer (1)]: images/3.1.1-CPServer-(1).svg "3.1.1 CPServer (1)" { width:auto; max-width:90% }
+
 
 注：
 
@@ -65,9 +71,10 @@ GG有很多重打包的游戏，对于这些游戏，我们会加入一些plugin
 
 
 ###第三方联运游戏上架流程
-![3.1.2 3rd-CP]
+![3.1.2 3rd-CP (1)]
 
-[3.1.2 3rd-CP]: images/3.1.2-3rd-CP.svg "3.1.2 3rd-CP" { width:auto; max-width:90% }
+[3.1.2 3rd-CP (1)]: images/3.1.2-3rd-CP-(1).svg "3.1.2 3rd-CP (1)" { width:auto; max-width:90% }
+
 
 注：
 
@@ -104,6 +111,11 @@ GGLY-SDK登录功能支持四种方式:
   1. 步骤1的GGLY-Server处理需要考虑 <subid, game_id, device, ip>
   2. 步骤3,4的参数都要带上： <subid, game_id, device, ip>
 
+##登录注册效果图
+![QQ图片20160613171444]
+
+[QQ图片20160613171444]: images/QQ-20160613171444.png "QQ图片20160613171444" { width:auto; max-width:50% }
+
 
 ##商品购买（区分自有和3rd的联运游戏）
 1. GGLY-Server并不区分commodity和currency
@@ -111,9 +123,10 @@ GGLY-SDK登录功能支持四种方式:
 3. 并且完成购买后向CPServer或3rd-CPServer通知(subid, game_id, commodity_id/currency_id)购买成功
 
 ###自有联运游戏的commodity购买
-![3.4.1自有产品购买]
+![3.4.1自有产品购买 (1)]
 
-[3.4.1自有产品购买]: images/3.4.1-.svg "3.4.1自有产品购买" { width:auto; max-width:90% }
+[3.4.1自有产品购买 (1)]: images/3.4.1-(1).svg "3.4.1自有产品购买 (1)" { width:auto; max-width:90% }
+
 
 
 ###第三方联运游戏的commodity和currency购买
