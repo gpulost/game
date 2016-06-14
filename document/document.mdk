@@ -6,11 +6,11 @@
 
 # 解释
 
-###CP
+##CP
             Content Provider, 游戏开发商
 
 ##GGLY-Server
-		        游戏联运平台, 联运平台和游戏开发商合作发行游戏，同一个游戏开发商可以和多家联运平台合作发行游戏，联运平台参提供账号系统，充值功能等功能，参入游戏收入分成
+		    游戏联运平台, 联运平台和游戏开发商合作发行游戏，同一个游戏开发商可以和多家联运平台合作发行游戏，联运平台参提供账号系统，充值功能等功能，参入游戏收入分成
 
 ##CPServer 和 3rd-CPServer
 		    1.游戏的发行方，为游戏提供数据支持，游戏内的各种逻辑，道具都是通过CPServer控制的
@@ -21,11 +21,19 @@
            2. 该SDK和GGLY-Server交互
            3. 该SDK提供登录注册、购买道具等功能
 
+<!--
 ##currency
-            游戏中的货币(eg.10个金币、20个钻石),GGLY-SDK向GGLY-Server购买,消耗RMB或者GG平台的积分
+            游戏中的货币(eg.),GGLY-SDK向GGLY-Server购买,消耗RMB或者GG平台的积分
+-->
 
 ##commodity
-            游戏中的商品(eg.裤子，魔法),游戏向CPServer购买,消耗currency
+            游戏中的商品，会有以下几种情况
+            1. 自有重打包游戏的商品： eg. 无限金币，免内购，上帝模式
+               这类商品是GGLY-SDK直接向GGLY-Server购买，由GGLY-Server扣除积分，并把购买结果通知CPServer的
+               
+            2. 第三方游戏的商品: eg. 裤子，魔法，10个金币，20个钻石,
+              其中 裤子，魔法这类商品是游戏向3rd-CPServer购买，对于GGLY-Server完全透明
+              10个金币，20个钻石这类商品是游戏集成的GGLY-SDK向GGLY-Server购买，然后GGLY-Server通知3rd-CPServer购买成功的，类似于游戏内货币充值行为
 
 ##plugin 
 
@@ -63,35 +71,27 @@
 # 数据举例
  表1. 重打包游戏的commodity数据示例
 
-![QQ图片20160614094827]
+![QQ图片20160614123356]
 
-[QQ图片20160614094827]: images/QQ-20160614094827.png "QQ图片20160614094827" { width:auto; max-width:90% }
+[QQ图片20160614123356]: images/QQ-20160614123356.png "QQ图片20160614123356" { width:auto; max-width:90% }
+
 
 
   表2. 第三方联运游戏的commodity数据示例
 
-![QQ图片20160614094430]
+![QQ图片20160614123512]
 
+[QQ图片20160614123512]: images/QQ-20160614123512.png "QQ图片20160614123512" { width:auto; max-width:90% }
 
-
-
-  表3. 第三方联运游戏的currency数据示例
-
-![QQ图片20160614100123]
-
-[QQ图片20160614100123]: images/QQ-20160614100123.png "QQ图片20160614100123" { width:auto; max-width:90% }
 
 
 表数据说明:
 
-1. 重打包游戏没有购买currency的概念，currency就是GG积分，重打包游戏的commodity购买直接消耗GG积分,所以没有currency数据
+1. 重打包游戏commodity目前只支持GG积分，目前的设计支持重打包游戏commodity使用游戏对应的内部货币购买
 
-2. 第三方游戏的currency详情对GGLY-Server透明，数据仅为举例，GGLY-Server只需要currency的
-   (game_id, currency_id, price_type, price)
-   
-3. 第三方游戏的commodity数据对GGLY-Server完全透明
+3. 第三方游戏的**commodity数据详情**对GGLY-Server完全透明，GGLY-Server只需要(game_id, commodity_id, price_type, price)
 
-4. 第三方游戏currency购买是否支持GG积分，取决于联运的具体合作形式，GGLY-Server平台支持该功能
+4. 第三方游戏commodity购买是否支持GG积分，取决于联运的具体合作形式，GGLY-Server平台支持该功能
 
 # 功能
 
@@ -103,14 +103,7 @@
 [3.1.1 CPServer]: images/3.1.1-CPServer.svg "3.1.1 CPServer" { width:auto; max-width:90% }
 
 
-数据举例：
 
-步骤1：录入(abcd123, 1, 魔法A， GG积分， 10)
-
-步骤3：录入(abcd123, 1, GG积分， 10)
-
-
-那么commodity数据需要录入到GGLY-Server的数据只需要有(abcd123, 1, GG积分, 10)的commodity数据
 
 注：
 
@@ -125,19 +118,8 @@
 [3.1.2 3rd-CP]: images/3.1.2-3rd-CP.svg "3.1.2 3rd-CP" { width:auto; max-width:90% }
 
 
-数据举例：
-
-    步骤2：录入(3abcd123, 4, RMB， 10)
-
-
-
-
-
-
-
 注：
 
-[QQ图片20160614094430]: images/QQ-20160614094430.png "QQ图片20160614094430" { width:auto; max-width:90% }
 
    1. GGLY-Server需要提供录入game信息, 商品(commodity_id, price_type, price)的功能
 
@@ -180,9 +162,9 @@ GGLY-SDK登录功能支持四种方式:
 
 
 ##商品购买（区分自有和3rd的联运游戏）
-1. GGLY-Server并不区分commodity和currency
-2. 对于GGLY-Server只需要知道(subid, game_id, commodity_id/currency_id, price_type, price)
-3. 并且完成购买后向CPServer或3rd-CPServer通知(subid, game_id, commodity_id/currency_id)购买成功
+1. GGLY-Server并不关心commodity详情，只关心(subid, game_id, commodity_id, price_type, price)
+2. 并且完成购买后向CPServer或3rd-CPServer通知(subid, game_id, commodity_id)购买成功
+3. CPServer或3rd-CPServer保存commodity的详细信息和游戏用户是否购买对应的商品信息
 
 ###自有联运游戏的commodity购买
 
@@ -197,21 +179,32 @@ GGLY-SDK登录功能支持四种方式:
 数据举例:
 
 
-* 一款游戏(game_id:abcd123）的用户A(sub_user_id: user123)，购买commodity(commodity_id:1)，则发生以下行为:
+* 一款自有联运游戏(game_id:abcd123）的用户A(sub_user_id: user123)，购买commodity(commodity_id:1)，则发生以下行为:
 
 
 1. GGLY-Server会扣除A的相应GG积分(根据录入的commodity数据扣除)
 2. 同时GGLY-Server通知CPServer, user123, 购买(abcd123, 1)成功
 3. CPServer更新user的commodity信息
 
-###第三方联运游戏的commodity和currency购买
-
+###第三方联运游戏的commodity购买
 
 ![3.4.2 3rd购买]
 
 [3.4.2 3rd购买]: images/3.4.2-3rd-.svg "3.4.2 3rd购买" { width:auto; max-width:90% }
 
-commodity购买对GGLY-Server透明，GGLY-Server完成currency购买，过程和自有游戏联运的commodity一样
+数据举例:
+
+
+* 一款第三方联运游戏(game_id:xcdef5678）的用户A(sub_user_id: user123)，购买commodity(commodity_id:4)，则发生以下行为:
+
+
+1. GGLY-Server会要求A支付 price_type: RMB, price: 10 (根据录入的commodity)
+
+2. 1成功，同时GGLY-Server通知3rd-CPServer以下信息: user123, 购买commodity(xcdef5678, 4)成功
+
+3. 3rd-CPServer收到2中的通知，更新user的信息，给user123增加10coins
+
+4. 游戏向3rd-CPServer使用coins或钻石 买 裤字或刀枪 对GGLY-Server透明
 
 
 
