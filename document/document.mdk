@@ -87,7 +87,7 @@
 
 表数据说明:
 
-1. 重打包游戏commodity目前只支持GG积分，目前的设计支持重打包游戏commodity使用游戏对应的内部货币购买
+1. 重打包游戏commodity目前只有GG积分购买的需求，现在的设计已经支持重打包游戏的commodity使用游戏对应的内部货币购买
 
 3. 第三方游戏的**commodity数据详情**对GGLY-Server完全透明，GGLY-Server只需要(game_id, commodity_id, price_type, price)
 
@@ -120,8 +120,9 @@
 
 注：
 
+   1. 第三方游戏需要联运需要先申请game_id,同时GGLY平台为之分配secert_key, game_token验证地址
 
-   1. GGLY-Server需要提供录入game信息, 商品(commodity_id, price_type, price)的功能
+   2. GGLY-Server需要提供录入game信息, 商品(commodity_id, price_type, price)的功能
 
 
 ##注册(不区分CPServer和3rd-CPServer)
