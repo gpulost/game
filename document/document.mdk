@@ -29,7 +29,8 @@
 
 ##plugin 
 
-            每个游戏会包含多个plugin，每个plugin会有一些功能点，这些功能点就是商品(commodity)
+            1. 只是自有联运游戏才会有plugin的概念
+            2. 每个游戏会包含多个plugin，每个plugin会有一些功能点，这些功能点就是商品(commodity)
 
 ##game
             和GGLY-Server进行联运的游戏，game中集成了GGLY-SDK
@@ -59,27 +60,57 @@
             3.签名生成算法参考 GG平台联运接入文档 V1.0.0
 
 
+# 数据举例
+ 表1. 重打包游戏的commodity数据示例
 
+![QQ图片20160614094827]
+
+[QQ图片20160614094827]: images/QQ-20160614094827.png "QQ图片20160614094827" { width:auto; max-width:90% }
+
+
+  表2. 第三方联运游戏的commodity数据示例
+
+![QQ图片20160614094430]
+
+
+
+
+  表3. 第三方联运游戏的currency数据示例
+
+![QQ图片20160614100123]
+
+[QQ图片20160614100123]: images/QQ-20160614100123.png "QQ图片20160614100123" { width:auto; max-width:90% }
+
+
+表数据说明:
+
+1. 重打包游戏没有购买currency的概念，currency就是GG积分，重打包游戏的commodity购买直接消耗GG积分,所以没有currency数据
+
+2. 第三方游戏的currency详情对GGLY-Server透明，数据仅为举例，GGLY-Server只需要currency的
+   (game_id, currency_id, price_type, price)
+   
+3. 第三方游戏的commodity数据对GGLY-Server完全透明
+
+4. 第三方游戏currency购买是否支持GG积分，取决于联运的具体合作形式，GGLY-Server平台支持该功能
 
 # 功能
 
 ##游戏上架，游戏商品录入
 
 ###自有联运游戏上架流程
-![3.1.1 CPServer (1)]
+![3.1.1 CPServer]
 
-[3.1.1 CPServer (1)]: images/3.1.1-CPServer-(1).svg "3.1.1 CPServer (1)" { width:auto; max-width:90% }
+[3.1.1 CPServer]: images/3.1.1-CPServer.svg "3.1.1 CPServer" { width:auto; max-width:90% }
 
-eg:
 
-  一款游戏有以下commodity数据，自有游戏的commodity只通过GG积分或RMB
+数据举例：
 
-![QQ图片20160613185107]
-  
+步骤1：录入(abcd123, 1, 魔法A， GG积分， 10)
 
-[QQ图片20160613185107]: images/QQ-20160613185107.png "QQ图片20160613185107" { width:auto; max-width:90% }
+步骤3：录入(abcd123, 1, GG积分， 10)
 
-那么commodity数据需要录入到GGLY-Server的数据只需要有(game_id, commodity_id, price_type, price)
+
+那么commodity数据需要录入到GGLY-Server的数据只需要有(abcd123, 1, GG积分, 10)的commodity数据
 
 注：
 
@@ -89,12 +120,24 @@ eg:
 
 
 ###第三方联运游戏上架流程
-![3.1.2 3rd-CP (1)]
+![3.1.2 3rd-CP]
 
-[3.1.2 3rd-CP (1)]: images/3.1.2-3rd-CP-(1).svg "3.1.2 3rd-CP (1)" { width:auto; max-width:90% }
+[3.1.2 3rd-CP]: images/3.1.2-3rd-CP.svg "3.1.2 3rd-CP" { width:auto; max-width:90% }
+
+
+数据举例：
+
+    步骤2：录入(3abcd123, 4, RMB， 10)
+
+
+
+
+
 
 
 注：
+
+[QQ图片20160614094430]: images/QQ-20160614094430.png "QQ图片20160614094430" { width:auto; max-width:90% }
 
    1. GGLY-Server需要提供录入game信息, 商品(commodity_id, price_type, price)的功能
 
@@ -112,9 +155,10 @@ GGLY-SDK注册功能支持三种方式：
 
 
 ##登录(不区分CPServer和3rd-CPServer)
-![3.3登录 (2)]
+![3.3登录]
 
-[3.3登录 (2)]: images/3.3-(2).svg "3.3登录 (2)" { width:auto; max-width:90% }
+[3.3登录]: images/3.3-.svg "3.3登录" { width:auto; max-width:90% }
+
 
 
 GGLY-SDK登录功能支持四种方式:
@@ -141,16 +185,16 @@ GGLY-SDK登录功能支持四种方式:
 3. 并且完成购买后向CPServer或3rd-CPServer通知(subid, game_id, commodity_id/currency_id)购买成功
 
 ###自有联运游戏的commodity购买
-![3.4.1自有产品购买 (1)]
 
-[3.4.1自有产品购买 (1)]: images/3.4.1-(1).svg "3.4.1自有产品购买 (1)" { width:auto; max-width:90% }
+
+
 
 
 
 ###第三方联运游戏的commodity和currency购买
-![3.4.2 3rd购买]
 
-[3.4.2 3rd购买]: images/3.4.2-3rd-.svg "3.4.2 3rd购买" { width:auto; max-width:90% }
+
+
 
 
 
