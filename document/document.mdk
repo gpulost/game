@@ -13,7 +13,7 @@
 		        游戏联运平台, 联运平台和游戏开发商合作发行游戏，同一个游戏开发商可以和多家联运平台合作发行游戏，联运平台参提供账号系统，充值功能等功能，参入游戏收入分成
 
 ##CPServer 和 3rd-CPServer
-		        1.游戏的发行方，为游戏提供数据支持，游戏内的各种逻辑，道具都是通过CPServer控制的
+		    1.游戏的发行方，为游戏提供数据支持，游戏内的各种逻辑，道具都是通过CPServer控制的
             2.在联运过程中，我们自己重打包的游戏也是以联运的方式发行，用以区分第三方游戏的CPServer，我们自己的叫做CPServer第三方的称为3rd-CPServer
 
 ##GGLY-SDK
@@ -186,14 +186,32 @@ GGLY-SDK登录功能支持四种方式:
 
 ###自有联运游戏的commodity购买
 
+![3.4.1自有产品购买]
+
+[3.4.1自有产品购买]: images/3.4.1-.svg "3.4.1自有产品购买" { width:auto; max-width:90% }
 
 
+注：
+  commodity购买由GGLY-SDK发起，对于游戏只是向CPServer获取已购买装备
+
+数据举例:
 
 
+* 一款游戏(game_id:abcd123）的用户A(sub_user_id: user123)，购买commodity(commodity_id:1)，则发生以下行为:
+
+
+1. GGLY-Server会扣除A的相应GG积分(根据录入的commodity数据扣除)
+2. 同时GGLY-Server通知CPServer, user123, 购买(abcd123, 1)成功
+3. CPServer更新user的commodity信息
 
 ###第三方联运游戏的commodity和currency购买
 
 
+![3.4.2 3rd购买]
+
+[3.4.2 3rd购买]: images/3.4.2-3rd-.svg "3.4.2 3rd购买" { width:auto; max-width:90% }
+
+commodity购买对GGLY-Server透明，GGLY-Server完成currency购买，过程和自有游戏联运的commodity一样
 
 
 
