@@ -162,23 +162,19 @@ GGLY-SDK登录功能支持四种方式:
 [QQ图片20160613171444]: images/QQ-20160613171444.png "QQ图片20160613171444" { width:auto; max-width:50% }
 
 
-##商品购买（区分自有和3rd的联运游戏）
+##商品购买（不区分自有和3rd的联运游戏， GG积分支付或RMB支付流程不同）
 1. GGLY-Server并不关心commodity详情，只关心(subid, game_id, commodity_id, price_type, price)
 2. 并且完成购买后向CPServer或3rd-CPServer通知(subid, game_id, commodity_id)购买成功
 3. CPServer或3rd-CPServer保存commodity的详细信息和游戏用户是否购买对应的商品信息
 
-###自有联运游戏的commodity购买
+###GG积分购买commodity 自有联运游戏的commodity购买（目前只有的需求）
+![3.5 商品购买（用GG积分支付）]
 
-![3.4.1自有产品购买]
-
-[3.4.1自有产品购买]: images/3.4.1-.svg "3.4.1自有产品购买" { width:auto; max-width:90% }
+[3.5 商品购买（用GG积分支付）]: images/3.5-GG-.png "3.5 商品购买（用GG积分支付）" { width:auto; }
 
 
-注：
-  commodity购买由GGLY-SDK发起，对于游戏只是向CPServer获取已购买装备
-
-数据举例:
-
+<!--
+数据举例(自有联运游戏为例):
 
 * 一款自有联运游戏(game_id:abcd123）的用户A(sub_user_id: user123)，购买commodity(commodity_id:1)，则发生以下行为:
 
@@ -186,14 +182,16 @@ GGLY-SDK登录功能支持四种方式:
 1. GGLY-Server会扣除A的相应GG积分(根据录入的commodity数据扣除)
 2. 同时GGLY-Server通知CPServer, user123, 购买(abcd123, 1)成功
 3. CPServer更新user的commodity信息
+-->
 
-###第三方联运游戏的commodity购买
+###RMB购买commodity
+![3.6 商品购买（ RMB支付）]
 
-![3.4.2 3rd购买]
+[3.6 商品购买（ RMB支付）]: images/3.6-RMB-.png "3.6 商品购买（ RMB支付）" { width:auto; }
 
-[3.4.2 3rd购买]: images/3.4.2-3rd-.svg "3.4.2 3rd购买" { width:auto; max-width:90% }
+<!--
 
-数据举例:
+数据举例(以第三方联运游戏为例):
 
 
 * 一款第三方联运游戏(game_id:xcdef5678）的用户A(sub_user_id: user123)，购买commodity(commodity_id:4)，则发生以下行为:
@@ -206,6 +204,9 @@ GGLY-SDK登录功能支持四种方式:
 3. 3rd-CPServer收到2中的通知，更新user的信息，给user123增加10coins
 
 4. 游戏向3rd-CPServer使用coins或钻石 买 裤字或刀枪 对GGLY-Server透明
+-->
+
+
 
 
 
