@@ -79,19 +79,18 @@
 
   表2. 第三方联运游戏的commodity数据示例
 
-![QQ图片20160614123512]
+![QQ图片20160616095106]
 
-[QQ图片20160614123512]: images/QQ-20160614123512.png "QQ图片20160614123512" { width:auto; max-width:90% }
+[QQ图片20160616095106]: images/QQ-20160616095106.png "QQ图片20160616095106" { width:auto; max-width:90% }
+
 
 
 
 表数据说明:
 
-1. 重打包游戏commodity目前只有GG积分购买的需求，现在的设计已经支持重打包游戏的commodity使用游戏对应的内部货币购买
+1. 现在的设计已经支持重打包游戏的commodity使用GG对应的内部货币购买，这个GG内部货币与积分不一样，可能是需要用人民币购买的
 
-3. 第三方游戏的**commodity数据详情**对GGLY-Server完全透明，GGLY-Server只需要(game_id, commodity_id, price_type, price)
-
-4. 第三方游戏commodity购买是否支持GG积分，取决于联运的具体合作形式，GGLY-Server平台支持该功能
+2. 第三方游戏commodity购买是否支持GG积分，取决于联运的具体合作形式，GGLY-Server平台支持该功能
 
 # 功能
 
@@ -162,12 +161,12 @@ GGLY-SDK登录功能支持四种方式:
 [QQ图片20160613171444]: images/QQ-20160613171444.png "QQ图片20160613171444" { width:auto; max-width:50% }
 
 
-##商品购买（不区分自有和3rd的联运游戏， GG积分支付或RMB支付流程不同）
+##商品购买（不区分自有和3rd的联运游戏， 区分GG积分支付或RMB支付）
 1. GGLY-Server并不关心commodity详情，只关心(subid, game_id, commodity_id, price_type, price)
 2. 并且完成购买后向CPServer或3rd-CPServer通知(subid, game_id, commodity_id)购买成功
 3. CPServer或3rd-CPServer保存commodity的详细信息和游戏用户是否购买对应的商品信息
 
-###GG积分购买commodity 自有联运游戏的commodity购买（目前只有的需求）
+###GG积分购买commodity
 ![3.5 商品购买（用GG积分支付）]
 
 [3.5 商品购买（用GG积分支付）]: images/3.5-GG-.png "3.5 商品购买（用GG积分支付）" { width:auto; }
